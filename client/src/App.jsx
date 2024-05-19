@@ -3,11 +3,21 @@ import LoginForm from './pages/Auth/LoginForm';
 import AuthLayout from './layouts/AuthLayout';
 import Dashboard from './pages/Dashboard/Dashboard';
 import { Route, BrowserRouter, Routes } from 'react-router-dom';
-import { Patients, Appointments, Clinics, MyAppointments } from './pages';
+import {
+    Patients,
+    Appointments,
+    Clinics,
+    MyAppointments,
+    Reserva,
+    Inicio,
+    Configuracion,
+    Perfil,
+} from './pages';
+import ReservaPago from './pages/Reserva/ReservaPago';
 
 function App() {
     return (
-        <div className="App ">
+        <div className="App h-screen w-screen">
             <BrowserRouter>
                 <Routes>
                     <Route path="/auth" element={<AuthLayout />}>
@@ -21,12 +31,14 @@ function App() {
                         <Route path="clinicas" element={<Clinics />} />
                         <Route
                             path="configuracion"
-                            element={<div>Configuración</div>}
+                            element={<Configuracion />}
                         />
-                        <Route path="perfil" element={<div>Perfil</div>} />
+                        <Route path="perfil" element={<Perfil />} />
                         <Route path="mis-citas" element={<MyAppointments />} />
-                        <Route path="inicio" element={<div>Inicio</div>} />
+                        <Route path="inicio" element={<Inicio />} />
                     </Route>
+                    <Route path="reserva" element={<Reserva />} />
+                    <Route path="reserva/pago" element={<ReservaPago />} />
                     <Route path="*">404 Not Found</Route>
                 </Routes>
             </BrowserRouter>
