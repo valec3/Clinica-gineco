@@ -2,7 +2,7 @@ import RegisterForm from './pages/Auth/RegisterForm';
 import LoginForm from './pages/Auth/LoginForm';
 import AuthLayout from './layouts/AuthLayout';
 import Dashboard from './pages/Dashboard/Dashboard';
-import { Route, BrowserRouter, Routes } from 'react-router-dom';
+import { Route, BrowserRouter, Routes, Navigate } from 'react-router-dom';
 import {
     Patients,
     Appointments,
@@ -20,6 +20,7 @@ function App() {
         <div className="App h-screen w-screen">
             <BrowserRouter>
                 <Routes>
+                    <Route path="/" element={<Navigate to="/auth/login" />} />
                     <Route path="/auth" element={<AuthLayout />}>
                         <Route path="login" element={<LoginForm />} />
                         <Route path="register" element={<RegisterForm />} />
