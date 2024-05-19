@@ -13,7 +13,7 @@ import {
 import { Input } from '@/components/ui/input';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-
+import userStore from '@/store/userStore';
 const formSchema = z.object({
     email: z.string().min(4, {
         message: 'email is too short',
@@ -31,6 +31,7 @@ const LoginForm = () => {
         // Do something with the form values.
         // ✅ This will be type-safe and validated.
         console.log(values);
+        userStore.setState({ user: values });
         navigate('/dashboard/pacientes');
     }
     return (
