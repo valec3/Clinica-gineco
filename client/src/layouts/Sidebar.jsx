@@ -34,12 +34,9 @@ const optionsNav = [
 ];
 
 import { useNavigate } from 'react-router-dom';
+import userStore from '@/store/userStore';
 const Sidebar = () => {
-    const user = {
-        name: 'Juan Reynaldo',
-        img: 'https://st3.depositphotos.com/15648834/17930/v/450/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg',
-        role: 'user',
-    };
+    const user = userStore((state) => state.user);
     const [active, setActive] = useState(
         optionsNav.find((op) => op.role === user.role).label,
     );
@@ -83,7 +80,7 @@ const Sidebar = () => {
             <div>
                 <div className="rounded-lg bg-gray-50 mb-4">
                     <img
-                        src={user.img}
+                        src={user.avatar}
                         alt=""
                         className="size-[100px] rounded-full object-cover mx-auto mt-5"
                     />

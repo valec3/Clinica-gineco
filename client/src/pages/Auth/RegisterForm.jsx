@@ -11,7 +11,8 @@ import {
     FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import userStore from '@/store/userStore';
 const formSchema = z.object({
     email: z
         .string()
@@ -29,11 +30,14 @@ const formSchema = z.object({
 });
 
 const RegisterForm = () => {
+    const navigate = useNavigate();
     const form = useForm({
         resolver: zodResolver(formSchema),
     });
     const onSubmit = (values) => {
         console.log(values);
+        userStore.setState({ user: values });
+        navigate('/dashboard/pacientes');
     };
     return (
         <Form {...form}>
