@@ -12,10 +12,13 @@ import {
     Inicio,
     Configuracion,
     Perfil,
+    Reporte,
 } from './pages';
 import ReservaPago from './pages/Reserva/ReservaPago';
-
+import userStore from './store/userStore';
 function App() {
+    const user = userStore((state) => state.user);
+    console.log('user:', user);
     return (
         <div className="App h-screen w-screen">
             <BrowserRouter>
@@ -28,7 +31,7 @@ function App() {
                     <Route path="/dashboard" element={<Dashboard />}>
                         <Route path="pacientes" element={<Patients />} />
                         <Route path="citas" element={<Appointments />} />
-                        <Route path="reporte" element={<div>Reporte</div>} />
+                        <Route path="reporte" element={<Reporte />} />
                         <Route path="clinicas" element={<Clinics />} />
                         <Route
                             path="configuracion"

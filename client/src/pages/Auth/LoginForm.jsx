@@ -22,16 +22,29 @@ const formSchema = z.object({
         message: 'password is too short',
     }),
 });
+import { loginUser } from '@/services';
+import { useState } from 'react';
+
 const LoginForm = () => {
+    const { setUser } = userStore((state) => state);
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState(null);
     const navigate = useNavigate();
     const form = useForm({
         resolver: zodResolver(formSchema),
     });
-    function onSubmit(values) {
-        // Do something with the form values.
-        // ✅ This will be type-safe and validated.
+    async function onSubmit(values) {
         console.log(values);
-        userStore.setState({ user: values });
+        setIsLoading(true);
+        const user = await loginUser(values);
+        if (user.id === undefined) {
+            setError('Invalid credentials');
+            setIsLoading(false);
+            return;
+        }
+        console.log(user);
+        setUser(user);
+        setIsLoading(false);
         navigate('/dashboard/pacientes');
     }
     return (
@@ -67,13 +80,15 @@ const LoginForm = () => {
                         </FormItem>
                     )}
                 />
+
                 <Button
                     type="submit"
                     className="bg-pink-400 font-bold uppercase"
                 >
-                    Enviar
+                    {isLoading ? 'Cargando...' : 'Iniciar sesión'}
                 </Button>
             </form>
+
             <FormDescription className="mt-4">
                 ¿No tienes una cuenta?{' '}
                 <Link to="/auth/register" className="text-pink-400">

@@ -55,7 +55,7 @@ const Sidebar = () => {
                         alt="logo"
                         className="size-8"
                     />
-                    <h3 className="font-bold text-pink-600">GINECONECTA</h3>
+                    <h1 className="font-bold text-pink-600">GINECONECTA</h1>
                 </div>
                 <div className="mt-5 w-full flex flex-col gap-y-2">
                     {optionsNav.map(
