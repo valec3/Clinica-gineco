@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
 
 const initUser = {
     name: 'John Doe',
@@ -9,10 +10,17 @@ const initUser = {
     address: '123 Fake St, City, Country',
 };
 
-const useStore = create((set) => ({
-    user: initUser,
-    setState: (newState) => set((state) => ({ ...state, ...newState })),
-    logout: () => set({ user: null }),
-}));
+const userStore = create(
+    persist(
+        (set) => ({
+            user: initUser,
+            setUser: (user) => set({ user }),
+            logout: () => set({ user: null }),
+        }),
+        {
+            name: 'user-storage',
+        },
+    ),
+);
 
-export default useStore;
+export default userStore;

@@ -13,31 +13,38 @@ import {
 import { Input } from '@/components/ui/input';
 import { Link, useNavigate } from 'react-router-dom';
 import userStore from '@/store/userStore';
+import { registerUser } from '@/services/index.js';
+import { useState } from 'react';
 const formSchema = z.object({
     email: z
         .string()
         .min(4, {
             message: 'email es muy corto',
         })
-        .email()
-        .nonempty({ message: 'email no puede estar vacío' }),
+        .email(),
     password: z.string().min(4, {
         message: 'password es muy corto',
     }),
-    username: z.string().min(4, {
-        message: 'username es muy corto',
+    name: z.string().min(4, {
+        message: 'name es muy corto',
     }),
 });
 
 const RegisterForm = () => {
     const navigate = useNavigate();
+    const [isLoading, setIsLoading] = useState(false);
+    const { setUser } = userStore((state) => state);
     const form = useForm({
         resolver: zodResolver(formSchema),
     });
-    const onSubmit = (values) => {
+    const onSubmit = async (values) => {
         console.log(values);
-        userStore.setState({ user: values });
-        navigate('/dashboard/pacientes');
+        setIsLoading(true);
+        const newUser = await registerUser(values);
+        console.log('newUser', newUser);
+        setUser(newUser);
+        setIsLoading(false);
+        navigate('/dashboard');
     };
     return (
         <Form {...form}>
@@ -53,14 +60,16 @@ const RegisterForm = () => {
                     control={form.control}
                     render={({ field }) => (
                         <FormItem className="flex flex-col items-start">
-                            <FormLabel htmlFor={field.id}>Correo:</FormLabel>
+                            <FormLabel htmlFor={field.id} required>
+                                Correo:
+                            </FormLabel>
                             <Input {...field} />
                             <FormMessage />
                         </FormItem>
                     )}
                 />
                 <FormField
-                    name="username"
+                    name="name"
                     control={form.control}
                     render={({ field }) => (
                         <FormItem className="flex flex-col items-start">
@@ -85,11 +94,15 @@ const RegisterForm = () => {
                         </FormItem>
                     )}
                 />
+                <label className="flex items-center gap-x-3">
+                    <input type="checkbox" />
+                    <span>Acepto los términos y condiciones</span>
+                </label>
                 <Button
                     type="submit"
                     className="bg-pink-400 font-bold uppercase"
                 >
-                    Enviar
+                    {isLoading ? 'Cargando...' : 'Registrarse'}
                 </Button>
             </form>
             <FormDescription className="mt-4">

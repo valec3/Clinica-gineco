@@ -1,12 +1,19 @@
 import { useNavigate } from 'react-router-dom';
+import reservaStore from '@/store/reserva';
+import useStore from '@/store/userStore';
+import { createAppointment } from '@/services';
 import { YapeQR } from '@/assets';
 const ReservaPago = () => {
+    const { setReserva, reserva } = reservaStore();
+    const { user } = useStore();
     const yapeNumber = '987-654-321';
     const navigate = useNavigate();
     const handleSubmit = (event) => {
         event.preventDefault();
         const file = event.target.file.files[0];
         console.log({ file });
+        setReserva({ ...reserva, pago: true });
+        createAppointment({ ...reserva, pago: true, userId: user.id });
         navigate('/dashboard/mis-citas');
     };
 

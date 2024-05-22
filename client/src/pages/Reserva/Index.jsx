@@ -1,14 +1,16 @@
 import { useNavigate } from 'react-router-dom';
-
+import reservaStore from '@/store/reserva';
 const Index = () => {
+    const { setReserva } = reservaStore();
     const handleSubmit = (event) => {
         event.preventDefault();
         const date = event.target.date.value;
         const time = event.target.time.value;
-        const clinic = event.target.clinic.value;
-        const doctor = event.target.doctor.value;
+        const clinicId = event.target.clinic.value;
+        const doctorId = event.target.doctor.value;
         const reason = event.target.reason.value;
-        console.log({ date, time, clinic, doctor, reason });
+        console.log({ date, time, clinicId, doctorId, reason });
+        setReserva({ date, time, clinicId, doctorId, reason });
         navigate('/reserva/pago');
     };
     const navigate = useNavigate();
