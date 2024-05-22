@@ -1,7 +1,11 @@
 import { useNavigate } from 'react-router-dom';
 import reservaStore from '@/store/reserva';
+import { getDoctors, getClinics } from '@/services/index';
+import { useEffect, useState } from 'react';
 const Index = () => {
     const { setReserva } = reservaStore();
+    const [doctors, setDoctors] = useState([]);
+    const [clinics, setClinics] = useState([]);
     const handleSubmit = (event) => {
         event.preventDefault();
         const date = event.target.date.value;
@@ -13,6 +17,18 @@ const Index = () => {
         setReserva({ date, time, clinicId, doctorId, reason });
         navigate('/reserva/pago');
     };
+    useEffect(() => {
+        const fetchDoctors = async () => {
+            const doctors = await getDoctors();
+            setDoctors(doctors);
+        };
+        const fetchClinics = async () => {
+            const clinics = await getClinics();
+            setClinics(clinics);
+        };
+        fetchDoctors();
+        fetchClinics();
+    }, []);
     const navigate = useNavigate();
     return (
         <section className="flex flex-col justify-center items-center px-8 py-10 bg-pink-100 min-h-screen">
@@ -62,9 +78,11 @@ const Index = () => {
                         id="clinic"
                         className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                     >
-                        <option value="1">Clínica 1</option>
-                        <option value="2">Clínica 2</option>
-                        <option value="3">Clínica 3</option>
+                        {clinics.map((clinic) => (
+                            <option key={clinic.id} value={clinic.id}>
+                                {clinic.name}
+                            </option>
+                        ))}
                     </select>
                 </div>
                 <div className="mb-4">
@@ -78,9 +96,11 @@ const Index = () => {
                         id="doctor"
                         className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                     >
-                        <option value="1">Dr. Pérez</option>
-                        <option value="2">Dr. Gómez</option>
-                        <option value="3">Dra. González</option>
+                        {doctors.map((doctor) => (
+                            <option key={doctor.id} value={doctor.id}>
+                                {doctor.name}
+                            </option>
+                        ))}
                     </select>
                 </div>
                 <div className="mb-6">

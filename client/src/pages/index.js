@@ -6,6 +6,7 @@ import Reserva from './Reserva/Index';
 import Inicio from './Dashboard/Inicio/Index';
 import Configuracion from './Dashboard/Configuracion/Index';
 import Perfil from './Dashboard/Perfil/Index';
+import Reporte from './Dashboard/Reporte/Index';
 export {
     Patients,
     Appointments,
@@ -15,4 +16,5 @@ export {
     Inicio,
     Configuracion,
     Perfil,
+    Reporte,
 };

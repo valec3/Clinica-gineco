@@ -5,6 +5,7 @@ import './models/index.js';
 import userRouter from './routes/user.js';
 import appointmentRouter from './routes/appointment.js';
 import clinicRouter from './routes/clinic.js';
+import doctorRouter from './routes/doctor.js';
 const app = express();
 
 app.use(cors());
@@ -16,6 +17,7 @@ app.get('/', (req, res) => {
 app.use('/users', userRouter);
 app.use('/appointments', appointmentRouter);
 app.use('/clinics', clinicRouter);
+app.use('/doctors', doctorRouter);
 app.listen(3000, () => {
     try {
         sequelize.authenticate();

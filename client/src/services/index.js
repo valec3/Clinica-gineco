@@ -134,4 +134,15 @@ export const getClinics = async () => {
     }
 };
 
+// Doctors
+
+export const getDoctors = async () => {
+    try {
+        const response = await api.get('/doctors');
+        return response.data;
+    } catch (error) {
+        console.error(error);
+    }
+};
+
 export default api;
