@@ -78,7 +78,7 @@ const Index = () => {
                         id="clinic"
                         className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                     >
-                        {clinics.map((clinic) => (
+                        {clinics?.map((clinic) => (
                             <option key={clinic.id} value={clinic.id}>
                                 {clinic.name}
                             </option>
@@ -96,7 +96,7 @@ const Index = () => {
                         id="doctor"
                         className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                     >
-                        {doctors.map((doctor) => (
+                        {doctors?.map((doctor) => (
                             <option key={doctor.id} value={doctor.id}>
                                 {doctor.name}
                             </option>
