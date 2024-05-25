@@ -12,8 +12,8 @@ const ReservaPago = () => {
         event.preventDefault();
         const file = event.target.file.files[0];
         console.log({ file });
-        setReserva({ ...reserva, pago: true });
-        createAppointment({ ...reserva, pago: true, userId: user.id });
+        setReserva({ ...reserva });
+        createAppointment({ ...reserva, userId: user.id, file });
         navigate('/dashboard/mis-citas');
     };
 
