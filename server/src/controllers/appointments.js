@@ -1,5 +1,5 @@
 import { Appointment } from '../models/index.js';
-
+import { uploadImage } from '../utils/uploadImage.js';
 const appointmentController = {};
 
 appointmentController.getAll = async (req, res) => {
@@ -26,7 +26,12 @@ appointmentController.getById = async (req, res) => {
 };
 
 appointmentController.create = async (req, res) => {
-    const { body } = req;
+    const { body, file } = req;
+    if (file) {
+        const { path } = file;
+        const { secure_url } = await uploadImage(path);
+        body.payment_image = secure_url;
+    }
     try {
         const newAppointment = await Appointment.create(body);
         res.json(newAppointment);

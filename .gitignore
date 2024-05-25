@@ -1,2 +1,19 @@
 server/node_modules
 client/node_modules
+server/.env
+client/.env
+
+# Ignore the build folder
+client/build
+server/build
+
+# Ignore the .DS_Store file
+.DS_Store
+
+# Ignore the .env file
+.env
+
+# Ignore the .env.local file
+.env.local
+
+server/app/*

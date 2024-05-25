@@ -49,12 +49,13 @@ const Appointment = sequelize.define('appointment', {
         type: DataTypes.STRING,
         defaultValue: 'pending',
     },
-    pago: {
-        type: DataTypes.BOOLEAN,
-        defaultValue: false,
-    },
     reason: {
         type: DataTypes.STRING,
+    },
+    payment_image: {
+        type: DataTypes.STRING,
+        defaultValue:
+            'https://www.thermaxglobal.com/wp-content/uploads/2020/05/image-not-found.jpg',
     },
 });
 

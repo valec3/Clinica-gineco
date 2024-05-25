@@ -1,17 +1,14 @@
 import { Sequelize } from 'sequelize';
-
-const sequelize = new Sequelize('db_gineco', 'root', '', {
-    host: 'localhost',
-    dialect: 'mysql',
-    port: 3306,
-    pool: {
-        max: 5,
-        min: 0,
-        idle: 10000,
+import { DB_CONFIG } from './env.js';
+const sequelize = new Sequelize(
+    DB_CONFIG.DATABASE,
+    DB_CONFIG.USER,
+    DB_CONFIG.PASSWORD,
+    {
+        host: DB_CONFIG.HOST,
+        dialect: 'mysql',
+        port: DB_CONFIG.PORT,
     },
-    define: {
-        timestamps: false,
-    },
-});
+);
 console.log('Conectado a la base de datos');
 export default sequelize;
