@@ -7,6 +7,8 @@ import Inicio from './Dashboard/Inicio/Index';
 import Configuracion from './Dashboard/Configuracion/Index';
 import Perfil from './Dashboard/Perfil/Index';
 import Reporte from './Dashboard/Reporte/Index';
+import ClinicasUser from './Dashboard/ClinicasUser/Index';
+import IndividualClinic from './Dashboard/ClinicasUser/IndividualClinic';
 export {
     Patients,
     Appointments,
@@ -17,4 +19,6 @@ export {
     Configuracion,
     Perfil,
     Reporte,
+    ClinicasUser,
+    IndividualClinic,
 };

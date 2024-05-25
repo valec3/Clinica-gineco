@@ -13,9 +13,12 @@ import {
     Configuracion,
     Perfil,
     Reporte,
+    ClinicasUser,
+    IndividualClinic,
 } from './pages';
 import ReservaPago from './pages/Reserva/ReservaPago';
 import userStore from './store/userStore';
+import InfoAppoinment from './pages/Dashboard/Citas/InfoAppoinment';
 function App() {
     const user = userStore((state) => state.user);
     console.log('user:', user);
@@ -29,8 +32,13 @@ function App() {
                         <Route path="register" element={<RegisterForm />} />
                     </Route>
                     <Route path="/dashboard" element={<Dashboard />}>
+                        <Route
+                            path=""
+                            element={<Navigate to="/dashboard/inicio" />}
+                        />
                         <Route path="pacientes" element={<Patients />} />
                         <Route path="citas" element={<Appointments />} />
+                        <Route path="citas/:id" element={<InfoAppoinment />} />
                         <Route path="reporte" element={<Reporte />} />
                         <Route path="clinicas" element={<Clinics />} />
                         <Route
@@ -40,6 +48,11 @@ function App() {
                         <Route path="perfil" element={<Perfil />} />
                         <Route path="mis-citas" element={<MyAppointments />} />
                         <Route path="inicio" element={<Inicio />} />
+                        <Route path="clinicas-red" element={<ClinicasUser />} />
+                        <Route
+                            path="clinicas/:id"
+                            element={<IndividualClinic />}
+                        />
                     </Route>
                     <Route path="reserva" element={<Reserva />} />
                     <Route path="reserva/pago" element={<ReservaPago />} />

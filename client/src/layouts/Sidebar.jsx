@@ -24,13 +24,19 @@ const optionsNav = [
         role: 'admin',
     },
     { label: 'Inicio', icon: <LayoutGrid />, path: '/inicio', role: 'user' },
-    { label: 'Perfil', icon: <User2 />, path: '/perfil', role: 'user' },
     {
         label: 'Mis citas',
         icon: <TextIcon />,
         path: '/mis-citas',
         role: 'user',
     },
+    {
+        label: 'Red de clinicas',
+        icon: <HeartPulse />,
+        path: '/clinicas-red',
+        role: 'user',
+    },
+    { label: 'Perfil', icon: <User2 />, path: '/perfil', role: 'user' },
 ];
 
 import { useNavigate } from 'react-router-dom';
