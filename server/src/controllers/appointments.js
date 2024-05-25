@@ -1,4 +1,4 @@
-import { Appointment } from '../models/index.js';
+import { Appointment, Doctor, User } from '../models/index.js';
 import { uploadImage } from '../utils/uploadImage.js';
 const appointmentController = {};
 
@@ -18,6 +18,16 @@ appointmentController.getById = async (req, res) => {
             where: {
                 id,
             },
+            include: [
+                {
+                    model: Doctor,
+                    as: 'doctor',
+                },
+                {
+                    model: User,
+                    as: 'user',
+                },
+            ],
         });
         res.json(appointment);
     } catch (error) {
@@ -26,14 +36,38 @@ appointmentController.getById = async (req, res) => {
 };
 
 appointmentController.create = async (req, res) => {
-    const { body, file } = req;
-    if (file) {
-        const { path } = file;
-        const { secure_url } = await uploadImage(path);
-        body.payment_image = secure_url;
-    }
+    const { date, time, reason, doctorId, userId, clinicId } = req.body;
+    const file = req.files?.payment_image;
+    let payment_image =
+        'https://www.thermaxglobal.com/wp-content/uploads/2020/05/image-not-found.jpg';
     try {
-        const newAppointment = await Appointment.create(body);
+        if (file) {
+            const { tempFilePath } = file;
+            const { secure_url } = await uploadImage(tempFilePath);
+            payment_image = secure_url;
+        }
+        const newAppointment = await Appointment.create(
+            {
+                date,
+                time,
+                reason,
+                doctorId,
+                userId,
+                clinicId,
+                payment_image,
+            },
+            {
+                fields: [
+                    'date',
+                    'time',
+                    'reason',
+                    'doctorId',
+                    'userId',
+                    'clinicId',
+                    'payment_image',
+                ],
+            },
+        );
         res.json(newAppointment);
     } catch (error) {
         console.log(error);

@@ -5,11 +5,11 @@ const Index = () => {
     const navigate = useNavigate();
     return (
         <section className="flex flex-col items-center justify-center px-8 py-10 ">
-            <div className="bg-white shadow-md rounded-lg overflow-hidden w-full max-w-2xl">
+            <div className="bg-white shadow-md rounded-lg overflow-hidden w-full max-w-3xl lg:max-w-4xl">
                 <img
                     src={HomeIcon}
                     alt="Welcome"
-                    className="w-full h-48 object-cover"
+                    className="w-full h-48 object-cover lg:h-56"
                 />
                 <div className="p-8 text-center">
                     <h2 className="text-3xl font-bold text-pink-400 mb-4">
@@ -33,7 +33,7 @@ const Index = () => {
                     </div>
                     <button
                         onClick={() => navigate('/reserva')}
-                        className="bg-pink-400 hover:bg-pink-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition duration-200"
+                        className="bg-pink-500 hover:bg-pink-400 text-white font-bold py-3 px-5 rounded focus:outline-none focus:shadow-outline transition duration-200 uppercase text-md"
                     >
                         Reservar cita
                     </button>

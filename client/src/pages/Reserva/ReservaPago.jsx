@@ -3,20 +3,34 @@ import reservaStore from '@/store/reserva';
 import useStore from '@/store/userStore';
 import { createAppointment } from '@/services';
 import { YapeQR } from '@/assets';
+import { useState } from 'react';
 const ReservaPago = () => {
     const { setReserva, reserva } = reservaStore();
+    const [paymentImage, setPaymentImage] = useState(null);
     const { user } = useStore();
     const yapeNumber = '987-654-321';
     const navigate = useNavigate();
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
-        const file = event.target.file.files[0];
-        console.log({ file });
-        setReserva({ ...reserva });
-        createAppointment({ ...reserva, userId: user.id, file });
-        navigate('/dashboard/mis-citas');
-    };
+        const newData = new FormData();
+        newData.append('date', reserva.date);
+        newData.append('time', reserva.time);
+        newData.append('reason', reserva.reason);
+        newData.append('doctorId', reserva.doctorId);
+        newData.append('clinicId', reserva.clinicId);
+        newData.append('payment_image', paymentImage);
+        newData.append('userId', user.id);
 
+        const res = await fetch('http://localhost:3000/appointments', {
+            method: 'POST',
+            body: newData,
+        });
+        console.log(res);
+        // navigate('/dashboard/mis-citas');
+    };
+    const handleChangeImage = (event) => {
+        setPaymentImage(event.target.files[0]);
+    };
     return (
         <section className="flex flex-col items-center justify-center px-8 py-10 bg-pink-100 min-h-screen">
             <h2 className="text-2xl font-bold text-pink-400 mb-4">
@@ -51,6 +65,7 @@ const ReservaPago = () => {
                             type="file"
                             id="file"
                             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            onChange={handleChangeImage}
                         />
                     </div>
                     <button

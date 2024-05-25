@@ -14,6 +14,7 @@ import { Input } from '@/components/ui/input';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import userStore from '@/store/userStore';
+import { GoogleLogin } from '@react-oauth/google';
 const formSchema = z.object({
     email: z.string().min(4, {
         message: 'email is too short',
@@ -87,6 +88,15 @@ const LoginForm = () => {
                 >
                     {isLoading ? 'Cargando...' : 'Iniciar sesión'}
                 </Button>
+                {error && <FormMessage type="error">{error}</FormMessage>}
+                <GoogleLogin
+                    onSuccess={(user) => {
+                        navigate('/dashboard/pacientes');
+                    }}
+                    onError={(error) => {
+                        console.error(error);
+                    }}
+                />
             </form>
 
             <FormDescription className="mt-4">
