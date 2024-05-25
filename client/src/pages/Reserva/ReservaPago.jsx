@@ -21,15 +21,9 @@ const ReservaPago = () => {
         newData.append('payment_image', paymentImage);
         newData.append('userId', user.id);
 
-        const res = await fetch(
-            'https://clinica-gineco.onrender.com/appointments',
-            {
-                method: 'POST',
-                body: newData,
-            },
-        );
+        const res = await createAppointment(newData);
         console.log(res);
-        // navigate('/dashboard/mis-citas');
+        navigate('/dashboard/mis-citas');
     };
     const handleChangeImage = (event) => {
         setPaymentImage(event.target.files[0]);
