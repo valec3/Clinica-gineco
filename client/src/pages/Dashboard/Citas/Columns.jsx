@@ -9,7 +9,12 @@ export const columns = [
     {
         header: 'Fecha',
         accessorKey: 'date',
-        cell: (row) => new Date(row.date).toLocaleDateString(),
+        cell: (row) => {
+            const date = new Date(row.getValue('date'));
+            return `${date.getFullYear()}-${
+                date.getMonth() + 1
+            }-${date.getDate()}`;
+        },
     },
     {
         header: 'Hora',
