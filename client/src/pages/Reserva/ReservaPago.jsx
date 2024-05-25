@@ -21,10 +21,13 @@ const ReservaPago = () => {
         newData.append('payment_image', paymentImage);
         newData.append('userId', user.id);
 
-        const res = await fetch('http://localhost:3000/appointments', {
-            method: 'POST',
-            body: newData,
-        });
+        const res = await fetch(
+            'https://clinica-gineco.onrender.com/appointments',
+            {
+                method: 'POST',
+                body: newData,
+            },
+        );
         console.log(res);
         // navigate('/dashboard/mis-citas');
     };
