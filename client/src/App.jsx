@@ -19,9 +19,28 @@ import {
 import ReservaPago from './pages/Reserva/ReservaPago';
 import userStore from './store/userStore';
 import InfoAppoinment from './pages/Dashboard/Citas/InfoAppoinment';
+import { useEffect } from 'react';
+import axios from 'axios';
 function App() {
-    const user = userStore((state) => state.user);
-    console.log('user:', user);
+    const { user, setUser } = userStore((state) => state);
+    useEffect(() => {
+        if (user.access_token) {
+            axios
+                .get(
+                    `https://www.googleapis.com/oauth2/v1/userinfo?access_token=${user.access_token}`,
+                    {
+                        headers: {
+                            Authorization: `Bearer ${user.access_token}`,
+                            Accept: 'application/json',
+                        },
+                    },
+                )
+                .then((res) => {
+                    setUser(res.data);
+                })
+                .catch((err) => console.log(err));
+        }
+    }, [user, setUser]);
     return (
         <div className="App h-screen w-screen">
             <BrowserRouter>

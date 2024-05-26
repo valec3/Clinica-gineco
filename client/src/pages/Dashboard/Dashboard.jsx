@@ -1,9 +1,10 @@
 import Sidebar from '@/layouts/Sidebar';
-import { Outlet, useLocation } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
+import userStore from '../../store/userStore';
 
 const Dashboard = () => {
-    const location = useLocation();
-    console.log(location.pathname);
+    const { user } = userStore((state) => state);
+    console.log(user);
     return (
         <div className="h-screen w-screen grid grid-cols-[1fr_6fr] gap-x-4 lg:gap-x-8 bg-gray-100">
             <Sidebar />

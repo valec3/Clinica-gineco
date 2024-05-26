@@ -14,7 +14,8 @@ import { Input } from '@/components/ui/input';
 import { Link, useNavigate } from 'react-router-dom';
 import userStore from '@/store/userStore';
 import { registerUser } from '@/services/index.js';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import BtnGoogle from './BtnGoogle';
 const formSchema = z.object({
     email: z
         .string()
@@ -34,6 +35,7 @@ const RegisterForm = () => {
     const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(false);
     const { setUser } = userStore((state) => state);
+    const [userGoogle, setUserGoogle] = useState({}); //[1
     const form = useForm({
         resolver: zodResolver(formSchema),
     });
@@ -46,6 +48,46 @@ const RegisterForm = () => {
         setIsLoading(false);
         navigate('/dashboard');
     };
+    useEffect(() => {
+        if (!userGoogle?.access_token) return;
+
+        const fetchUser = async () => {
+            setIsLoading(true);
+            try {
+                const response = await fetch(
+                    `https://www.googleapis.com/oauth2/v1/userinfo?access_token=${userGoogle.access_token}`,
+                    {
+                        headers: {
+                            Authorization: `Bearer ${userGoogle.access_token}`,
+                            Accept: 'application/json',
+                        },
+                    },
+                );
+
+                if (!response.ok) {
+                    throw new Error('Failed to fetch user information');
+                }
+
+                const data = await response.json();
+                const user = await registerUser({
+                    email: data.email,
+                    password: data.id,
+                    name: data.name,
+                });
+
+                if (user) {
+                    setUser(user);
+                    navigate('/dashboard/inicio');
+                }
+            } catch (err) {
+                console.error(err);
+            } finally {
+                setIsLoading(false);
+            }
+        };
+
+        fetchUser();
+    }, [userGoogle, setUser, navigate]);
     return (
         <Form {...form}>
             <h2 className="mb-10 text-2xl font-bold">
@@ -105,6 +147,10 @@ const RegisterForm = () => {
                     {isLoading ? 'Cargando...' : 'Registrarse'}
                 </Button>
             </form>
+            <BtnGoogle
+                setUserGoogle={setUserGoogle}
+                text="Registrarse con Google"
+            />
             <FormDescription className="mt-4">
                 ¿Ya tienes una cuenta?{' '}
                 <Link to="/auth/login" className="text-pink-500">
