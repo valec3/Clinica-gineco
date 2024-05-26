@@ -15,6 +15,7 @@ import {
     Reporte,
     ClinicasUser,
     IndividualClinic,
+    TermsPage,
 } from './pages';
 import ReservaPago from './pages/Reserva/ReservaPago';
 import userStore from './store/userStore';
@@ -75,6 +76,7 @@ function App() {
                     </Route>
                     <Route path="reserva" element={<Reserva />} />
                     <Route path="reserva/pago" element={<ReservaPago />} />
+                    <Route path="terms" element={<TermsPage />} />
                     <Route path="*">404 Not Found</Route>
                 </Routes>
             </BrowserRouter>

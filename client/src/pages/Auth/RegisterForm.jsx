@@ -136,10 +136,15 @@ const RegisterForm = () => {
                         </FormItem>
                     )}
                 />
-                <label className="flex items-center gap-x-3">
+                <div className="flex items-center gap-x-3">
                     <input type="checkbox" />
-                    <span>Acepto los términos y condiciones</span>
-                </label>
+                    <a
+                        onClick={() => navigate('/terms')}
+                        className="cursor-pointer underline"
+                    >
+                        Acepto los términos y condiciones
+                    </a>
+                </div>
                 <Button
                     type="submit"
                     className="bg-pink-400 font-bold uppercase"

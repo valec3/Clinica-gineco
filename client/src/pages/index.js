@@ -9,6 +9,7 @@ import Perfil from './Dashboard/Perfil/Index';
 import Reporte from './Dashboard/Reporte/Index';
 import ClinicasUser from './Dashboard/ClinicasUser/Index';
 import IndividualClinic from './Dashboard/ClinicasUser/IndividualClinic';
+import TermsPage from './TermsPage';
 export {
     Patients,
     Appointments,
@@ -21,4 +22,5 @@ export {
     Reporte,
     ClinicasUser,
     IndividualClinic,
+    TermsPage,
 };

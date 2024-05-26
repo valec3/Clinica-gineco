@@ -1,11 +1,14 @@
+import { clinics } from './Index';
+import { useParams } from 'react-router-dom';
 const IndividualClinic = () => {
+    const { id } = useParams();
     return (
         <div className="container mx-auto">
-            <h2 className="text-2xl font-bold mb-4">Clinica A</h2>
+            <h2 className="text-2xl font-bold mb-4">{clinics[id].name}</h2>
             <div className="bg-white rounded-lg shadow-md p-6">
                 <div className="mb-4">
                     <img
-                        src="https://www.sanna.pe/public/Images/Clinicas/20190403133420_7hejSBa3uo.png"
+                        src={clinics[id].image}
                         alt="Clinica A"
                         className="w-full h-56 object-cover mb-4 rounded-md"
                     />
@@ -22,23 +25,35 @@ const IndividualClinic = () => {
                 <div className="mb-4">
                     <h3 className="text-lg font-bold mb-2">Médicos:</h3>
                     <ul>
-                        <li>Dr. Juan Pérez</li>
-                        <li>Dra. María González</li>
-                        <li>Dr. Pedro Rodríguez</li>
+                        {clinics[id].doctors.map((doctor, idx) => (
+                            <li key={idx}>{doctor.name}</li>
+                        ))}
                     </ul>
                 </div>
                 <div className="mb-4">
                     <h3 className="text-lg font-bold mb-2">
                         Horario de Atención:
                     </h3>
-                    <p>Lunes a Viernes: 8:00 AM - 5:00 PM</p>
-                    <p>Sábados: 8:00 AM - 12:00 PM</p>
+                    <p>
+                        {Object.keys(clinics[id].schedule).map((day, idx) => (
+                            <p key={idx}>
+                                {day}: {clinics[id].schedule[day]}
+                            </p>
+                        ))}
+                    </p>
                 </div>
                 <div>
                     <h3 className="text-lg font-bold mb-2">Ubicación:</h3>
-                    <p>Dirección: Calle Principal #123, Ciudad, País</p>
-                    <p>Teléfono: +123 456 789</p>
-                    <p>Email: info@clinicax.com</p>
+                    <p>
+                        <strong>Dirección:</strong>{' '}
+                        {clinics[id].location.address}
+                    </p>
+                    <p>
+                        <strong>Teléfono:</strong> {clinics[id].location.phone}
+                    </p>
+                    <p>
+                        <strong>Email:</strong> {clinics[id].location.email}
+                    </p>
                 </div>
             </div>
         </div>
